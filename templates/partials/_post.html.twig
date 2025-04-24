@@ -1,55 +1,21 @@
 <div class="mb-4 col-md-4 col-sm-6">
     <div class="card shadow-sm">
-        <img src="https://placehold.co/600x400" alt="">
+        <img src="{{ post.image }}" alt="{{ post.title }}">
         <div class="card-body">
-            <h5 class="card-title">Title 01</h5>
-            <small class="text-muted">Rédigé par Auteur 01</small>
-            <a href="#" class="btn mt-4 w-100 btn-outline-primary">
-                Lire la suite</a></div>
-    </div>
-</div>
-<div class="mb-4 col-md-4 col-sm-6">
-    <div class="card shadow-sm"><img src="https://placehold.co/600x400" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Title 02</h5>
-            <small class="text-muted">Rédigé par Auteur 02</small><a href=""
-                                                                     class="btn mt-4 w-100 btn-outline-primary">Lire
-                la suite</a></div>
-    </div>
-</div>
-<div class="mb-4 col-md-4 col-sm-6">
-    <div class="card shadow-sm"><img src="https://placehold.co/600x400" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Title 03</h5>
-            <small class="text-muted">Rédigé par Auteur 03</small><a href=""
-                                                                     class="btn mt-4 w-100 btn-outline-primary">Lire
-                la suite</a></div>
-    </div>
-</div>
-<div class="mb-4 col-md-4 col-sm-6">
-    <div class="card shadow-sm"><img src="https://placehold.co/600x400" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Title 04</h5>
-            <small class="text-muted">Rédigé par Auteur 04</small><a href=""
-                                                                     class="btn mt-4 w-100 btn-outline-primary">Lire
-                la suite</a></div>
-    </div>
-</div>
-<div class="mb-4 col-md-4 col-sm-6">
-    <div class="card shadow-sm"><img src="https://placehold.co/600x400" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Title 05</h5>
-            <small class="text-muted">Rédigé par Auteur 05</small><a href=""
-                                                                     class="btn mt-4 w-100 btn-outline-primary">Lire
-                la suite</a></div>
-    </div>
-</div>
-<div class="mb-4 col-md-4 col-sm-6">
-    <div class="card shadow-sm"><img src="https://placehold.co/600x400" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Title 06</h5>
-            <small class="text-muted">Rédigé par Auteur 06</small><a href=""
-                                                                     class="btn mt-4 w-100 btn-outline-primary">Lire
-                la suite</a></div>
+            <h5 class="card-title">
+                {{ post.title }}
+            </h5>
+            <small class="text-muted">
+                Rédigé par {{ post.user.firstname }}
+            </small>
+            <a href="{{ path('default_post', {
+                'categorySlug' : post.category.slug,
+                'postSlug' : post.slug,
+                'id' : post.id,
+            }) }}"
+               class="btn mt-4 w-100 btn-outline-primary">
+                Lire la suite
+            </a>
+        </div>
     </div>
 </div>

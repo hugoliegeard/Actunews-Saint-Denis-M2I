@@ -1,7 +1,12 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ app.request.get('slug')|capitalize }}{% endblock %}
-{% block page_title %}{{ app.request.get('slug')|capitalize }}{% endblock %}
+{% block title %}
+    {{ category.name }}
+{% endblock %}
+
+{% block page_title %}
+    {{ category.name }}
+{% endblock %}
 
 {% block content %}
 
@@ -9,6 +14,8 @@
 
     <!-- .row>(.mb-4.col-md-4.col-sm-6>.card.shadow-sm>img+.card-body>h5.card-title{Title $$}+small.text-muted{Rédigé par Auteur $$}+a.btn.mt-4.w-100.btn-outline-primary{Lire la suite})*7 -->
     <div class="row">
-        {% include 'partials/_post.html.twig' %}
+        {% for post in category.posts %}
+            {% include 'partials/_post.html.twig' %}
+        {% endfor %}
     </div>
 {% endblock %}
