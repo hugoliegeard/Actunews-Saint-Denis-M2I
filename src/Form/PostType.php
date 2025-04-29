@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -36,8 +37,8 @@ class PostType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu de votre article',
             ])
-            ->add('image', TextType::class, [
-                'label' => 'Image de votre article',
+            ->add('image', FileType::class, [
+                'label' => 'Image de votre article (.jpg, .png, .webP)',
             ])
             ->add('user', EntityType::class, [
                 'label' => 'Utilisateur de l\'article',

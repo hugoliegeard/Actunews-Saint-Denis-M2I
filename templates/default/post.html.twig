@@ -24,13 +24,13 @@
 
             <!-- Image principale -->
             <div class="mb-4">
-                <img src="{{ post.image }}" alt="{{ post.title }}" class="img-fluid rounded">
+                <img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}" class="img-fluid rounded">
                 {#  <figcaption class="text-muted small mt-2">{{ post.title }}</figcaption>#}
             </div>
 
             <!-- Contenu de l'article -->
             <div class="article-content">
-                {{ post.content }}
+                {{ post.content | raw }}
             </div>
 
             <!-- Auteur de l'article -->

@@ -1,6 +1,6 @@
 <div class="mb-4 col-md-4 col-sm-6">
     <div class="card shadow-sm">
-        <img src="{{ post.image }}" alt="{{ post.title }}">
+        <img src="{{ asset('uploads/posts/' ~ post.image) }}" alt="{{ post.title }}">
         <div class="card-body">
             <h5 class="card-title">
                 {{ post.title }}
