@@ -12,11 +12,14 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+#[Route('/admin')]
 class PostController extends AbstractController
 {
     #[Route('/rediger-un-article', name: 'post_create', methods: ['GET', 'POST'])]
+    // #[IsGranted('ROLE_ADMIN')]
     public function createPost(Request                $request,
                                SluggerInterface       $slugger,
                                #[Autowire('%kernel.project_dir%/public/uploads/posts')] string $postsDirectory,
@@ -32,7 +35,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         # Vérifier si le formulaire est soumis
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             # Par sécurité
             $post->setSlug($slugger->slug($post->getSlug()));

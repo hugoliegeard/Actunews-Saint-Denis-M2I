@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
+#[ApiResource]
 class Post
 {
     #[ORM\Id]
@@ -17,15 +20,35 @@ class Post
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Vous devez saisir un titre')]
+    #[Assert\Length(
+        min:5,
+        max: 255,
+        minMessage: 'Le titre doit contenir au moins {{ limit }} caractères',
+        maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères'
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Vous devez saisir un contenu')]
+    #[Assert\Length(
+        min: 20,
+        minMessage: 'Le contenu doit contenir au moins {{ limit }} caractères'
+    )]
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Vous devez saisir une image')]
+    #[Assert\Image(
+        maxSize: '2M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/gif'],
+        maxSizeMessage: 'L\'image ne doit pas dépasser {{ limit }} {{ suffix }}',
+        mimeTypesMessage: 'L\'image doit être au format JPEG, PNG ou GIF',
+    )]
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Vous devez saisir un slug')]
     private ?string $slug = null;
 
     #[ORM\Column]

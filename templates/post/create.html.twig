@@ -30,15 +30,25 @@
                 .replace(/\s+/g, "-")               // Remplace les espaces par des tirets
                 .replace(/-+/g, "-");               // Supprime les tirets en double
         }
-        
+
         const titleInput = document.getElementById('post_title');
         const slugInput = document.getElementById('post_slug');
-        
+
         titleInput.addEventListener('input', function() {
             const slug = slugify(titleInput.value);
             slugInput.value = slug;
         });
-        
+
+        document.querySelector('form[name=post]').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!this.checkValidity()) {
+                event.stopPropagation();
+                this.classList.add('was-validated');
+            } else {
+                this.submit();
+            }
+        });
+
     </script>
 
 {% endblock %}
@@ -54,7 +64,7 @@
 {% block content %}
     <div class="row">
         <div class="col-8 mx-auto">
-            {{ form(form) }}
+            {{ form(form, {'attr': {'novalidate':   'novalidate'}}) }}
         </div>
     </div>
 {% endblock %}

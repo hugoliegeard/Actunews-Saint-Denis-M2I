@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -19,6 +21,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\NotBlank(message: 'Vous devez saisir une adresse email')]
+    #[Assert\Email(message: 'L\'adresse email {{ value }} n\'est pas valide')]
+    #[Assert\Length(
+        min: 5,
+        max: 180,
+        minMessage: 'L\'adresse email doit contenir au moins {{ limit }} caractères',
+        maxMessage: 'L\'adresse email ne peut pas dépasser {{ limit }} caractères'
+    )]
     private ?string $email = null;
 
     /**
@@ -31,12 +41,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Vous devez saisir un mot de passe')]
+    #[PasswordStrength(
+        minScore: PasswordStrength::STRENGTH_STRONG,
+        message: 'Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial'
+    )]
+    #[Assert\Length(
+        min: 12,
+        minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères',
+    )]
+    #[Assert\NotCompromisedPassword(
+        message: 'Ce mot de passe a été compromis dans une fuite de données. Veuillez en choisir un autre.'
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 80)]
+    #[Assert\NotBlank(message: 'Vous devez saisir un prénom')]
+    #[Assert\Length(
+        min: 2,
+        max: 80,
+        minMessage: 'Le prénom doit contenir au moins {{ limit }} caractères',
+        maxMessage: 'Le prénom ne peut pas dépasser {{ limit }} caractères'
+    )]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 80)]
+    #[Assert\NotBlank(message: 'Vous devez saisir un nom')]
+    #[Assert\Length(
+        min: 2,
+        max: 80,
+        minMessage: 'Le nom doit contenir au moins {{ limit }} caractères',
+        maxMessage: 'Le nom ne peut pas dépasser {{ limit }} caractères'
+    )]
     private ?string $lastname = null;
 
     /**
